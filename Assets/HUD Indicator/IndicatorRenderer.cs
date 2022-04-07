@@ -17,7 +17,8 @@ namespace HUDIndicator {
         }
     }
 
-    public class IndicatorStructure {
+    public class Indicator {
+        public IndicatorRenderer renderer;
         public GameObject gameObject;
         public RawImage rawImage;
         public RectTransform rect;
@@ -35,17 +36,21 @@ namespace HUDIndicator {
 
     public class IndicatorRenderer : MonoBehaviour{
 
-        private Dictionary<int, IndicatorStructure> indicators = new Dictionary<int, IndicatorStructure>();
+        [SerializeField] private Color canvasColor = new Color(1, 0, 0, .3f);
+        
+        [HideInInspector] public RectTransform rect;
+
+        private Dictionary<int, Indicator> indicators = new Dictionary<int, Indicator>();
 
         void Start(){
-        
+            rect = GetComponent<RectTransform>();
         }
 
         void Update(){
         
         }
 
-		public IndicatorStructure CreateIndicator(IndicatorPoint point) {
+		public Indicator CreateIndicator(IndicatorPoint point) {
             int hash = point.GetHashCode();
 
             if(!indicators.ContainsKey(hash)) {
@@ -81,40 +86,56 @@ namespace HUDIndicator {
             }
 	    }
 
-        private IndicatorStructure CreateIndicatorStructure(IndicatorPoint point) {
-            IndicatorStructure structure        = new IndicatorStructure();
+        private Indicator CreateIndicatorStructure(IndicatorPoint point) {
+            Indicator indicator                 = new Indicator();
+            indicator.renderer                  = this;
 
             // Create game object
-            structure.gameObject                = new GameObject($"Indicator:{point.gameObject.name}");
-            structure.gameObject.transform.SetParent(transform);
+            indicator.gameObject                = new GameObject($"Indicator:{point.gameObject.name}");
+            indicator.gameObject.transform.SetParent(transform);
 
             // Create raw image
-            structure.rawImage                  = structure.gameObject.AddComponent<RawImage>();
-            structure.rawImage.texture          = point.style.texture;
-            structure.rawImage.color            = point.style.color;
+            indicator.rawImage                  = indicator.gameObject.AddComponent<RawImage>();
+            indicator.rawImage.texture          = point.style.texture;
+            indicator.rawImage.color            = point.style.color;
 
             // Create arrow game object
-            structure.arrow.gameObject          = new GameObject($"Indicator:Arrow:{point.gameObject.name}");
-            structure.arrow.gameObject.transform.SetParent(structure.gameObject.transform);
+            indicator.arrow.gameObject          = new GameObject($"Indicator:Arrow:{point.gameObject.name}");
+            indicator.arrow.gameObject.transform.SetParent(indicator.gameObject.transform);
 
             // Create arrow raw image
-            structure.arrow.rawImage            = structure.arrow.gameObject.AddComponent<RawImage>();
-            structure.arrow.rawImage.texture    = point.style.arrow;
-            structure.arrow.rawImage.color      = point.style.color;
+            indicator.arrow.rawImage            = indicator.arrow.gameObject.AddComponent<RawImage>();
+            indicator.arrow.rawImage.texture    = point.style.arrow;
+            indicator.arrow.rawImage.color      = point.style.color;
 
             // Setup rect transform
-            structure.rect                      = structure.gameObject.GetComponent<RectTransform>();
-            structure.rect.localScale           = Vector3.one;
-            structure.rect.sizeDelta            = new Vector2(point.style.width, point.style.height);
+            indicator.rect                      = indicator.gameObject.GetComponent<RectTransform>();
+            indicator.rect.localScale           = Vector3.one;
+            indicator.rect.sizeDelta            = new Vector2(point.style.width, point.style.height);
 
             // Setup arrow rect transform
-            structure.arrow.rect                = structure.arrow.gameObject.GetComponent<RectTransform>();
-            structure.arrow.rect.localScale     = Vector3.one;
-            structure.arrow.rect.sizeDelta      = new Vector2(point.style.arrow.width, point.style.arrow.height);
-            structure.arrow.rect.pivot          = new Vector2(0.5f, 1 + (point.style.height / 2f + point.style.space) / point.style.arrow.height);
+            indicator.arrow.rect                = indicator.arrow.gameObject.GetComponent<RectTransform>();
+            indicator.arrow.rect.localScale     = Vector3.one;
+            indicator.arrow.rect.sizeDelta      = new Vector2(point.style.arrow.width, point.style.arrow.height);
+            indicator.arrow.rect.pivot          = new Vector2(0.5f, 1 + (point.style.height / 2f + point.style.space) / point.style.arrow.height);
 
-            return structure;
+            return indicator;
         }
+
+
+		private void OnDrawGizmosSelected() {
+            rect = GetComponent<RectTransform>();
+
+            Texture2D tex = new Texture2D(1, 1);
+            tex.SetPixel(0, 0, canvasColor);
+            tex.Apply();
+
+            Vector3 pos = rect.TransformPoint(new Vector3(rect.rect.x, rect.rect.y, 0));
+            Graphics.DrawTexture(new Rect(pos.x, pos.y, rect.rect.width * rect.lossyScale.x, rect.rect.height * rect.lossyScale.y), tex);
+
+            DestroyImmediate(tex);
+        }
+
     }
 
 }

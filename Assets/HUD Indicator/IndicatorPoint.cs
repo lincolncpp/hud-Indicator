@@ -26,7 +26,7 @@ namespace HUDIndicator {
 
         public Style style;
 
-        private List<IndicatorStructure> structures = new List<IndicatorStructure>();
+        private List<Indicator> indicators = new List<Indicator>();
 
 
         void Start() {
@@ -35,10 +35,10 @@ namespace HUDIndicator {
             }
 
             foreach(IndicatorRenderer renderer in renderers) {
-                IndicatorStructure structure;
+                Indicator structure;
 
                 structure = renderer.CreateIndicator(this);
-                structures.Add(structure);
+                indicators.Add(structure);
             }
         }
 
@@ -61,19 +61,62 @@ namespace HUDIndicator {
         }
 
         void Update() {
+            foreach(Indicator indicator in indicators) {
+                Rect rendererRect = indicator.renderer.rect.rect;
+                Vector3 pos = indicator.renderer.rect.InverseTransformPoint(Camera.main.WorldToScreenPoint(transform.position));
+
+
+                // On-Screen
+                if (pos.z >= 0 && pos.x >= rendererRect.x && pos.x <= rendererRect.x + rendererRect.width && pos.y >= rendererRect.y && pos.y <= rendererRect.y + rendererRect.height) {
+                    // Update indicators on renderer
+                    indicator.arrow.gameObject.SetActive(false);
+                }
+                // Off-Screen
+				else {
+                    if(pos.z < 0) {
+                        pos *= -1;
+                    }
+
+                    float a = pos.x / rendererRect.width;
+                    float b = pos.y / rendererRect.height;
+
+                    // The indicator lies on left or right corner
+                    if(Mathf.Abs(a) > Mathf.Abs(b)) {
+
+                        // Right corner
+                        if(a > 0) {
+                            float y = rendererRect.width/2f * pos.y / pos.x;
+                            pos = new Vector2(rendererRect.width/2f, y);
+                        }
+                        // Left corner
+                        else {
+                            float y = -rendererRect.width/2f * pos.y / pos.x;
+                            pos = new Vector2(-rendererRect.width/2f, y);
+                        }
+                    }
+                    // The indicator lies on top or bottom corner
+                    else {
+                        // Top corner
+                        if(b > 0) {
+                            float x = rendererRect.height / 2f * pos.x / pos.y;
+							pos = new Vector2(x, rendererRect.height / 2f);
+                        }
+                        // Bottom corner
+                        else {
+                            float x = -rendererRect.height / 2f * pos.x / pos.y;
+							pos = new Vector2(x, -rendererRect.height / 2f);
+                        }
+                    }
+                }
+                
+                indicator.rect.anchoredPosition = new Vector2(pos.x, pos.y);
+			}
             
-            Vector3 vec = Camera.main.WorldToScreenPoint(transform.position);
-            vec = renderers[0].GetComponent<RectTransform>().InverseTransformPoint(vec);
-
-			structures[0].rect.anchoredPosition = new Vector2(vec.x, vec.y);
-
-
             // Get width and height from this \/
-            print(renderers[0].GetComponent<RectTransform>().rect);
+            //print(renderers[0].GetComponent<RectTransform>().rect + " == " + vec + " == " + indicators[0].rawImage.rectTransform.lossyScale);
+
 
             return;
-
-
 
 
 
@@ -99,7 +142,7 @@ namespace HUDIndicator {
             if(point.z >= 0 && point.x >= -w / 2f && point.x <= w / 2f && point.y >= -h / 2f && point.y <= h / 2f) {
 
                 // Update indicators on renderer
-                foreach(IndicatorStructure structure in structures) {
+                foreach(Indicator structure in indicators) {
                     structure.arrow.gameObject.SetActive(false);
                     structure.rect.anchoredPosition = new Vector2(point.x, point.y);
                 }
@@ -148,7 +191,7 @@ namespace HUDIndicator {
                 Vector2 dir = new Vector2(point.x, point.y);
 
                 // Update indicators on renderer
-                foreach(IndicatorStructure structure in structures) {
+                foreach(Indicator structure in indicators) {
                     structure.arrow.gameObject.SetActive(true);
                     structure.arrow.rect.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.down, dir));
                     structure.rect.anchoredPosition = pos;
