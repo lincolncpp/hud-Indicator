@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HUDIndicator {
+namespace HUDIndicator.teste {
 
 
     [System.Serializable]
@@ -65,6 +65,8 @@ namespace HUDIndicator {
                 Rect rendererRect = indicator.renderer.rect.rect;
                 Vector3 pos = indicator.renderer.rect.InverseTransformPoint(Camera.main.WorldToScreenPoint(transform.position));
 
+                rendererRect.width -= style.width;
+                rendererRect.height -= style.height;
 
                 // On-Screen
                 if (pos.z >= 0 && pos.x >= rendererRect.x && pos.x <= rendererRect.x + rendererRect.width && pos.y >= rendererRect.y && pos.y <= rendererRect.y + rendererRect.height) {
@@ -112,9 +114,6 @@ namespace HUDIndicator {
                 indicator.rect.anchoredPosition = new Vector2(pos.x, pos.y);
 			}
             
-            // Get width and height from this \/
-            //print(renderers[0].GetComponent<RectTransform>().rect + " == " + vec + " == " + indicators[0].rawImage.rectTransform.lossyScale);
-
 
             return;
 

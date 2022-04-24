@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HUDIndicator {
+namespace HUDIndicator.teste {
     
     public class Arrow {
         public GameObject gameObject;
@@ -81,7 +81,7 @@ namespace HUDIndicator {
         public void DisableIndicator(IndicatorPoint point) {
             int hash = point.GetHashCode();
 
-            if(indicators[hash] != null) {
+            if(indicators[hash] != null && indicators[hash].gameObject != null) {
                 indicators[hash].gameObject.SetActive(false);
             }
 	    }
