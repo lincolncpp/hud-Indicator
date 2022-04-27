@@ -8,8 +8,8 @@ namespace LincolnCpp.HUDIndicator {
     [System.Serializable]
     public abstract class Indicator : MonoBehaviour {
 
-        public List<IndicatorRenderer> renderers;
         public bool visible = true;
+        public List<IndicatorRenderer> renderers;
         
         protected Dictionary<IndicatorRenderer, IndicatorCanvas> indicatorsCanvas = new Dictionary<IndicatorRenderer, IndicatorCanvas>();
 

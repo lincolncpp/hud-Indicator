@@ -6,6 +6,7 @@ namespace LincolnCpp.HUDIndicator {
 
     public class IndicatorRenderer : MonoBehaviour {
         public bool visible = true;
+        public float margin = 10f;
         public Color canvasColor = new Color(1, 0, 0, .5f);
 
         [HideInInspector] public RectTransform rectTransform;
@@ -15,18 +16,27 @@ namespace LincolnCpp.HUDIndicator {
         }
 
         public Rect GetRect() {
-            return rectTransform.rect;
+            return SetMarginToRect(rectTransform.rect, margin);
 		}
+
+        private Rect SetMarginToRect(Rect rect, float margin) {
+            rect.x += margin;
+            rect.y += margin;
+            rect.width -= margin * 2f;
+            rect.height -= margin * 2f;
+            return rect;
+        }
 
         private void OnDrawGizmosSelected() {
             rectTransform = GetComponent<RectTransform>();
+            Rect rect = SetMarginToRect(rectTransform.rect, margin);
 
             Texture2D tex = new Texture2D(1, 1);
             tex.SetPixel(0, 0, canvasColor);
             tex.Apply();
 
-            Vector3 pos = rectTransform.TransformPoint(new Vector3(rectTransform.rect.x, rectTransform.rect.y, 0));
-            Graphics.DrawTexture(new Rect(pos.x, pos.y, rectTransform.rect.width * rectTransform.lossyScale.x, rectTransform.rect.height * rectTransform.lossyScale.y), tex);
+            Vector3 pos = rectTransform.TransformPoint(new Vector3(rect.x, rect.y, 0));
+            Graphics.DrawTexture(new Rect(pos.x, pos.y, rect.width * rectTransform.lossyScale.x, rect.height * rectTransform.lossyScale.y), tex);
 
             DestroyImmediate(tex);
         }

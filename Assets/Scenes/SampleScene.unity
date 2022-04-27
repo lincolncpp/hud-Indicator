@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 1691241438}
   - component: {fileID: 1691241437}
   - component: {fileID: 1691241436}
+  - component: {fileID: 1691241440}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -439,21 +440,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1691241434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c660d981a1dbd44eaa0fdbbbd053c0b, type: 3}
+  m_Script: {fileID: 11500000, guid: c08470e2a2343b14e90107557e5208ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visible: 1
   renderers:
   - {fileID: 1966657204}
-  visible: 1
-  textType: 1
-  text: 
   style:
-    iconSource: 0
     texture: {fileID: 2800000, guid: fedc3fab58ba6d143ae2821a0467f679, type: 3}
-    prefab: {fileID: 0}
-    color: {r: 0, g: 1, b: 0.42252803, a: 0.46666667}
+    color: {r: 1, g: 0, b: 0, a: 1}
     width: 32
     height: 32
+  showArrow: 1
+  arrowStyle:
+    indicator: {fileID: 0}
+    texture: {fileID: 2800000, guid: 13bc36f3708ae034b8747652f3402c10, type: 3}
+    color: {r: 1, g: 0, b: 0, a: 1}
+    margin: 10
 --- !u!65 &1691241437
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -516,6 +519,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691241434}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1691241440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691241434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c660d981a1dbd44eaa0fdbbbd053c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visible: 1
+  renderers:
+  - {fileID: 1966657204}
+  style:
+    texture: {fileID: 2800000, guid: fedc3fab58ba6d143ae2821a0467f679, type: 3}
+    color: {r: 0.38124967, g: 1, b: 0, a: 1}
+    width: 32
+    height: 32
 --- !u!1 &1723115009
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +608,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1124710828}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -610,7 +633,7 @@ RectTransform:
   - {fileID: 1966657203}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 21.736, y: -42.059, z: 25.511}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -665,8 +688,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visible: 1
+  margin: 48
   canvasColor: {r: 1, g: 0, b: 0, a: 0.5}
-  rectTransform: {fileID: 0}
+  rectTransform: {fileID: 1966657203}
 --- !u!1 &2018741712
 GameObject:
   m_ObjectHideFlags: 0

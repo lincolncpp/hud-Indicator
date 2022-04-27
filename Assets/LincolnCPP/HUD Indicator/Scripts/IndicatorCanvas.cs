@@ -8,7 +8,8 @@ namespace LincolnCpp.HUDIndicator {
         public Indicator indicator { private set; get; }
         public IndicatorRenderer renderer { private set; get; }
 
-        public bool active { private set; get; }
+        protected GameObject gameObject;
+        protected bool active;
 
         public virtual void Create(Indicator indicator, IndicatorRenderer renderer) {
             this.indicator = indicator;
@@ -20,10 +21,16 @@ namespace LincolnCpp.HUDIndicator {
         public abstract void Update();
 
         public virtual void OnEnable() {
+            if(gameObject != null) {
+                gameObject.SetActive(true);
+			}
             active = true;
         }
         public virtual void OnDisable(){
-            active = false;   
+            if(gameObject != null) {
+                gameObject.SetActive(false);
+            }
+            active = false;
         }
 
         public virtual void Destroy() {}
