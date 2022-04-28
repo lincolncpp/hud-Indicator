@@ -6,9 +6,10 @@ namespace LincolnCpp.HUDIndicator {
 
     [System.Serializable]
     public class IndicatorArrowStyle {
-        [HideInInspector] public Indicator indicator;
         public Texture texture = null;
         public Color color = Color.red;
         public float margin = 0f;
+        public float width = 16f;
+        public float height = 16f;
     }
 }

@@ -29,19 +29,20 @@ namespace LincolnCpp.HUDIndicator {
             // Setup rect transform
             rectTransform = gameObject.AddComponent<RectTransform>();
             rectTransform.localScale = Vector3.one;
-            rectTransform.sizeDelta = new Vector2(style.width, style.height);
             rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
             // Create icon image from texture
             rawImage = gameObject.AddComponent<RawImage>();
-            rawImage.texture = style.texture;
-            rawImage.color = style.color;
+
+            // Update icon style
+            UpdateStyle();
         }
 
 		public override void Update() {
             if(!active) return;
 
             if(IsVisible()) {
+                UpdateStyle();
                 UpdatePosition();
             }
 			else {
@@ -49,6 +50,12 @@ namespace LincolnCpp.HUDIndicator {
                     gameObject.SetActive(false);
 				}
             }
+        }
+
+        private void UpdateStyle() {
+            rectTransform.sizeDelta = new Vector2(style.width, style.height);
+            rawImage.texture = style.texture;
+            rawImage.color = style.color;
         }
 
         private void UpdatePosition() {

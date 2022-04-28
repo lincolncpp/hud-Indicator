@@ -7,7 +7,7 @@ namespace LincolnCpp.HUDIndicator {
 	public class IndicatorOnScreen : Indicator {
 		public IndicatorIconStyle style;
 
-		public override void CreateIndicatorCanvas(IndicatorRenderer renderer) {
+		protected override void CreateIndicatorCanvas(IndicatorRenderer renderer) {
 			IndicatorCanvasOnScreen indicatorCanvasOnScreen = new IndicatorCanvasOnScreen();
 			indicatorCanvasOnScreen.Create(this, renderer);
 

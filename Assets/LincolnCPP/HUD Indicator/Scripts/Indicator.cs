@@ -9,7 +9,7 @@ namespace LincolnCpp.HUDIndicator {
     public abstract class Indicator : MonoBehaviour {
 
         public bool visible = true;
-        public List<IndicatorRenderer> renderers;
+        [SerializeField] private List<IndicatorRenderer> renderers;
         
         protected Dictionary<IndicatorRenderer, IndicatorCanvas> indicatorsCanvas = new Dictionary<IndicatorRenderer, IndicatorCanvas>();
 
@@ -43,9 +43,9 @@ namespace LincolnCpp.HUDIndicator {
             }
 		}
 
-        public abstract void CreateIndicatorCanvas(IndicatorRenderer renderer);
+        protected abstract void CreateIndicatorCanvas(IndicatorRenderer renderer);
 
-        public void DestroyIndicatorCanvas(IndicatorRenderer renderer) {
+        private void DestroyIndicatorCanvas(IndicatorRenderer renderer) {
             if(indicatorsCanvas.ContainsKey(renderer)) {
                 indicatorsCanvas[renderer].Destroy();
 			}

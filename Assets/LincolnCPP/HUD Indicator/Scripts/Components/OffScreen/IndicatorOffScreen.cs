@@ -11,7 +11,7 @@ namespace LincolnCpp.HUDIndicator {
 		public bool showArrow = true;
 		public IndicatorArrowStyle arrowStyle;
 
-		public override void CreateIndicatorCanvas(IndicatorRenderer renderer) {
+		protected override void CreateIndicatorCanvas(IndicatorRenderer renderer) {
 			IndicatorCanvasOffScreen indicatorCanvasOffScreen = new IndicatorCanvasOffScreen();
 			indicatorCanvasOffScreen.Create(this, renderer);
 

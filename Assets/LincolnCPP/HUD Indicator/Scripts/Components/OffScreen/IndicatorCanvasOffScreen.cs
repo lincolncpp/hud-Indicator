@@ -35,13 +35,10 @@ namespace LincolnCpp.HUDIndicator {
             // Setup rect transform
             rectTransform = gameObject.AddComponent<RectTransform>();
             rectTransform.localScale = Vector3.one;
-            rectTransform.sizeDelta = new Vector2(style.width, style.height);
             rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
             // Create raw image
             rawImage = gameObject.AddComponent<RawImage>();
-            rawImage.texture = style.texture;
-            rawImage.color = style.color;
 
             // Create arrow game object
             arrowGameObject = new GameObject($"IndicatorOffScreen:Arrow:{indicator.gameObject.name}");
@@ -49,27 +46,53 @@ namespace LincolnCpp.HUDIndicator {
 
             // Create arrow raw image
             arrowRawImage = arrowGameObject.AddComponent<RawImage>();
-            arrowRawImage.texture = arrowStyle.texture;
-            arrowRawImage.color = arrowStyle.color;
 
             // Setup arrow rect transform
             arrowRectTransform = arrowGameObject.GetComponent<RectTransform>();
             arrowRectTransform.localScale = Vector3.one;
-            arrowRectTransform.sizeDelta = new Vector2(arrowStyle.texture.width, arrowStyle.texture.height);
-            arrowRectTransform.pivot = new Vector2(0.5f, 1 + (style.height / 2f + arrowStyle.margin) / arrowStyle.texture.height);
+
+
+            // Update icon and arrow style
+            UpdateStyle();
+            UpdateArrowStyle();
         }
 
         public override void Update() {
             if(!active) return;
 
             if(IsVisible()) {
+                // Update icon style
+                UpdateStyle();
+
+                // Update arrow style and show/hide arrow
+                if(indicatorOffScreen.showArrow) {
+                    arrowGameObject.SetActive(true);
+                    UpdateArrowStyle();
+				}
+				else {
+                    arrowGameObject.SetActive(false);
+                }
+
+                // Update icon position
                 UpdatePosition();
             }
             else {
-                if(gameObject.activeSelf) {
-                    gameObject.SetActive(false);
-                }
+                gameObject.SetActive(false);
             }
+        }
+
+        private void UpdateStyle() {
+            rectTransform.sizeDelta = new Vector2(style.width, style.height);
+            rawImage.texture = style.texture;
+            rawImage.color = style.color;
+        }
+
+        private void UpdateArrowStyle() {
+            arrowRectTransform.sizeDelta = new Vector2(arrowStyle.width, arrowStyle.height);
+            arrowRectTransform.pivot = new Vector2(0.5f, 1 + ((style.height + style.width) / 4f + arrowStyle.margin) / arrowStyle.height);
+
+            arrowRawImage.texture = arrowStyle.texture;
+            arrowRawImage.color = arrowStyle.color;
         }
 
         private void UpdatePosition() {
@@ -126,7 +149,6 @@ namespace LincolnCpp.HUDIndicator {
                 // Update arrow rotation
                 Vector2 dir = new Vector2(pos.x, pos.y);
                 arrowRectTransform.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.down, dir));
-                arrowRectTransform.pivot = new Vector2(0.5f, 1 + (style.height / 2f + arrowStyle.margin) / arrowStyle.texture.height);
 
                 rectTransform.position = renderer.rectTransform.TransformPoint(new Vector3(pos.x, pos.y, 0));
             }

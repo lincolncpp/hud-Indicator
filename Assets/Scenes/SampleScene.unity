@@ -408,8 +408,8 @@ GameObject:
   - component: {fileID: 1691241439}
   - component: {fileID: 1691241438}
   - component: {fileID: 1691241437}
-  - component: {fileID: 1691241436}
   - component: {fileID: 1691241440}
+  - component: {fileID: 1691241436}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -453,10 +453,11 @@ MonoBehaviour:
     height: 32
   showArrow: 1
   arrowStyle:
-    indicator: {fileID: 0}
     texture: {fileID: 2800000, guid: 13bc36f3708ae034b8747652f3402c10, type: 3}
     color: {r: 1, g: 0, b: 0, a: 1}
     margin: 10
+    width: 16
+    height: 16
 --- !u!65 &1691241437
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -688,7 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visible: 1
-  margin: 48
+  margin: 40
   canvasColor: {r: 1, g: 0, b: 0, a: 0.5}
   rectTransform: {fileID: 1966657203}
 --- !u!1 &2018741712
