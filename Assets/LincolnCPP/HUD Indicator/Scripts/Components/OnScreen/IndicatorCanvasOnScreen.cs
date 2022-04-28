@@ -31,7 +31,7 @@ namespace LincolnCpp.HUDIndicator {
             rectTransform.localScale = Vector3.one;
             rectTransform.pivot = new Vector2(0.5f, 0.5f);
 
-            // Create icon image from texture
+            // Create icon image
             rawImage = gameObject.AddComponent<RawImage>();
 
             // Update icon style
@@ -60,19 +60,20 @@ namespace LincolnCpp.HUDIndicator {
 
         private void UpdatePosition() {
             Rect rendererRect = renderer.GetRect();
-            Vector3 pos = renderer.rectTransform.InverseTransformPoint(Camera.main.WorldToScreenPoint(indicator.gameObject.transform.position));
+            Vector3 pos = renderer.GetRectTransform().InverseTransformPoint(renderer.camera.WorldToScreenPoint(indicator.gameObject.transform.position));
 
             rendererRect.x += style.width / 2f;
             rendererRect.y += style.height/ 2f;
             rendererRect.width -= style.width;
             rendererRect.height -= style.height;
 
-            // On screen
+            // On-screen (Show)
             if (pos.z >= 0 && pos.x >= rendererRect.x && pos.x <= rendererRect.x + rendererRect.width && pos.y >= rendererRect.y && pos.y <= rendererRect.y + rendererRect.height) {
                 gameObject.SetActive(true);
                 
-                rectTransform.position = renderer.rectTransform.TransformPoint(new Vector3(pos.x, pos.y, 0));            
+                rectTransform.position = renderer.GetRectTransform().TransformPoint(new Vector3(pos.x, pos.y, 0));            
             }
+            // Off-screen (Hide)
             else {
                 gameObject.SetActive(false);
             }

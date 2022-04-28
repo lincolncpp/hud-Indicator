@@ -5,9 +5,8 @@ using UnityEngine;
 namespace LincolnCpp.HUDIndicator {
 
     public abstract class IndicatorCanvas {
-        public Indicator indicator { private set; get; }
-        public IndicatorRenderer renderer { private set; get; }
-
+        protected Indicator indicator { private set; get; }
+        protected IndicatorRenderer renderer { private set; get; }
         protected GameObject gameObject;
         protected bool active;
 

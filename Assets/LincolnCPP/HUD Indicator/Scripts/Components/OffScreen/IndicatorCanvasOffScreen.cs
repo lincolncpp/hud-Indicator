@@ -97,17 +97,18 @@ namespace LincolnCpp.HUDIndicator {
 
         private void UpdatePosition() {
             Rect rendererRect = renderer.GetRect();
-            Vector3 pos = renderer.rectTransform.InverseTransformPoint(Camera.main.WorldToScreenPoint(indicator.gameObject.transform.position));
+            Vector3 pos = renderer.GetRectTransform().InverseTransformPoint(renderer.camera.WorldToScreenPoint(indicator.gameObject.transform.position));
 
             rendererRect.x += style.width / 2f;
             rendererRect.y += style.height / 2f;
             rendererRect.width -= style.width;
             rendererRect.height -= style.height;
 
-            // On screen
+            // On-screen (Hide)
             if(pos.z >= 0 && pos.x >= rendererRect.x && pos.x <= rendererRect.x + rendererRect.width && pos.y >= rendererRect.y && pos.y <= rendererRect.y + rendererRect.height) {
                 gameObject.SetActive(false);
             }
+            // Off-screen (Show)
             else {
                 gameObject.SetActive(true);
 
@@ -150,7 +151,7 @@ namespace LincolnCpp.HUDIndicator {
                 Vector2 dir = new Vector2(pos.x, pos.y);
                 arrowRectTransform.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.down, dir));
 
-                rectTransform.position = renderer.rectTransform.TransformPoint(new Vector3(pos.x, pos.y, 0));
+                rectTransform.position = renderer.GetRectTransform().TransformPoint(new Vector3(pos.x, pos.y, 0));
             }
 
         }

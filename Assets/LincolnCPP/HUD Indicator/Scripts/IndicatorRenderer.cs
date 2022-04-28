@@ -6,17 +6,26 @@ namespace LincolnCpp.HUDIndicator {
 
     public class IndicatorRenderer : MonoBehaviour {
         public bool visible = true;
-        public float margin = 10f;
-        public Color canvasColor = new Color(1, 0, 0, .5f);
+        public float margin = 32f;
+        public Color canvasColor = new Color(0, 207f/255f, 1f, 27f/255f);
+        public new Camera camera;
 
-        [HideInInspector] public RectTransform rectTransform;
+        private RectTransform rectTransform;
 
         void Awake() {
             rectTransform = GetComponent<RectTransform>();
+
+            if (camera == null) {
+                camera = Camera.main;
+			}
         }
 
-        public Rect GetRect() {
+		public Rect GetRect() {
             return SetMarginToRect(rectTransform.rect, margin);
+		}
+
+        public RectTransform GetRectTransform() {
+            return rectTransform;
 		}
 
         private Rect SetMarginToRect(Rect rect, float margin) {
