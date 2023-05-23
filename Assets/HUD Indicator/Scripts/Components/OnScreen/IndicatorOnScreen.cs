@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace HUDIndicator {
 
+	[AddComponentMenu("HUD Indicator/Indicator On Screen")]
 	public class IndicatorOnScreen : Indicator {
 		public IndicatorIconStyle style;
 

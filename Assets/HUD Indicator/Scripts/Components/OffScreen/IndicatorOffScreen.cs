@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HUDIndicator {
 
-	[System.Serializable]
+	[AddComponentMenu("HUD Indicator/Indicator Off Screen")]
 	public class IndicatorOffScreen : Indicator {
 
 		public IndicatorIconStyle style;

@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace HUDIndicator {
 
-    public class IndicatorRenderer : MonoBehaviour {
+	[AddComponentMenu("HUD Indicator/Indicator Renderer")]
+	public class IndicatorRenderer : MonoBehaviour {
         public bool visible = true;
         public float margin = 32f;
         public Color canvasColor = new Color(0, 207f/255f, 1f, 27f/255f);
