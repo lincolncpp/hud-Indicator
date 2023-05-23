@@ -1250,9 +1250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visible: 1
-  renderers:
-  - {fileID: 1364389739}
-  - {fileID: 512113148}
+  renderers: []
   style:
     texture: {fileID: 2800000, guid: 84b4c828b929e3c4991c9d0b20cb3aab, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
@@ -1278,9 +1276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visible: 1
-  renderers:
-  - {fileID: 1364389739}
-  - {fileID: 512113148}
+  renderers: []
   style:
     texture: {fileID: 2800000, guid: 84b4c828b929e3c4991c9d0b20cb3aab, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
