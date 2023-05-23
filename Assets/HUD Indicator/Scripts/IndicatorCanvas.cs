@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LincolnCpp.HUDIndicator {
+namespace HUDIndicator {
 
     public abstract class IndicatorCanvas {
         protected Indicator indicator { private set; get; }

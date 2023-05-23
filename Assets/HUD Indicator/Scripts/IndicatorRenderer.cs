@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LincolnCpp.HUDIndicator {
+namespace HUDIndicator {
 
     public class IndicatorRenderer : MonoBehaviour {
         public bool visible = true;
         public float margin = 32f;
         public Color canvasColor = new Color(0, 207f/255f, 1f, 27f/255f);
-        public new Camera camera;
+        internal new Camera camera;
 
         private RectTransform rectTransform;
 

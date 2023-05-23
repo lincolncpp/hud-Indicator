@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace LincolnCpp.HUDIndicator {
+namespace HUDIndicator {
 
     [System.Serializable]
     public abstract class Indicator : MonoBehaviour {

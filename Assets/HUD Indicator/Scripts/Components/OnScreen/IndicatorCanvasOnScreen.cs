@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace LincolnCpp.HUDIndicator {
+namespace HUDIndicator {
 	public class IndicatorCanvasOnScreen : IndicatorCanvas {
 
         private IndicatorOnScreen indicatorOnScreen;

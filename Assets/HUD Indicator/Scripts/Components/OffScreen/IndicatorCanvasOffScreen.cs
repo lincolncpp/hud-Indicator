@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LincolnCpp.HUDIndicator {
+namespace HUDIndicator {
 	public class IndicatorCanvasOffScreen : IndicatorCanvas {
 
         private IndicatorOffScreen indicatorOffScreen;

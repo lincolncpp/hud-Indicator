@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LincolnCpp.HUDIndicator {
+namespace HUDIndicator {
 
 	public class IndicatorOnScreen : Indicator {
 		public IndicatorIconStyle style;
