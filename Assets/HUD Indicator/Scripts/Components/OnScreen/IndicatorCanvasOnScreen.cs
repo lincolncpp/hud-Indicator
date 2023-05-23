@@ -79,5 +79,9 @@ namespace HUDIndicator {
             }
 
         }
-    }
+
+		public override void Destroy() {
+			GameObject.Destroy(gameObject);
+		}
+	}
 }

@@ -9,7 +9,7 @@ namespace HUDIndicator {
         public bool visible = true;
         public float margin = 32f;
         public Color canvasColor = new Color(0, 207f/255f, 1f, 27f/255f);
-        internal new Camera camera;
+        public new Camera camera;
 
         private RectTransform rectTransform;
 

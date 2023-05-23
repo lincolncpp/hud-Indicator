@@ -1,22 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
 namespace HUDIndicator {
 
-    [System.Serializable]
     public abstract class Indicator : MonoBehaviour {
 
         public bool visible = true;
-        [SerializeField] private List<IndicatorRenderer> renderers;
+        [SerializeField] private List<IndicatorRenderer> renderers = new List<IndicatorRenderer>();
         
         protected Dictionary<IndicatorRenderer, IndicatorCanvas> indicatorsCanvas = new Dictionary<IndicatorRenderer, IndicatorCanvas>();
 
 		private void Start() {
+            if (renderers.Count == 0) {
+                IndicatorRenderer[] renderersInScene = GameObject.FindObjectsOfType<IndicatorRenderer>(true);
+
+                if (renderersInScene.Length > 0) {
+                    renderers = renderersInScene.ToList();
+				}
+                else {
+                    Debug.LogError("No IndicatorRenderer found in scene");
+                }
+			}
+            
             foreach(IndicatorRenderer renderer in renderers) {
                 CreateIndicatorCanvas(renderer);
             }
+        }
+
+        public List<IndicatorRenderer> GetRenderers() {
+            return renderers;
+        }
+
+        public void SetRenderer(IndicatorRenderer renderer) {
+			renderers = new List<IndicatorRenderer> {
+				renderer
+			};
+		}
+
+        public void SetRenderer(List<IndicatorRenderer> renderers) {
+            this.renderers = renderers;
         }
 
 		private void Update() {
