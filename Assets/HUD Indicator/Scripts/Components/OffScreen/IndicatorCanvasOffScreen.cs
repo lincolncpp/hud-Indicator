@@ -97,7 +97,10 @@ namespace HUDIndicator {
 
         private void UpdatePosition() {
             Rect rendererRect = renderer.GetRect();
-            Vector3 pos = renderer.GetRectTransform().InverseTransformPoint(renderer.camera.WorldToScreenPoint(indicator.gameObject.transform.position));
+            Vector3 screenPos = renderer.camera.WorldToScreenPoint(indicator.gameObject.transform.position);
+            if(screenPos.z < 0 ) screenPos.z = - screenPos.z;
+            Vector3 pos = renderer.GetRectTransform().InverseTransformPoint(screenPos);
+
 
             rendererRect.x += style.width / 2f;
             rendererRect.y += style.height / 2f;
